@@ -167,8 +167,14 @@ body {
   border: none;
   background: transparent;
   color: #262626;
-  font-size: 1rem;
+  font-size: 1.05rem;
   cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.more-btn:hover {
+  transform: scale(1.12);
+  color: #d62976;
 }
 
 .post-image {
@@ -190,6 +196,21 @@ body {
   display: flex;
   gap: 14px;
   font-size: 1.25rem;
+}
+
+.icon-btn {
+  border: none;
+  background: transparent;
+  color: #262626;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.icon-btn:hover {
+  transform: scale(1.18);
+  color: #d62976;
 }
 
 .save-icon {
