@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Excusas</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap");
+
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.45);
+            --txt-main: #1e1f24;
+            --txt-soft: #3f424f;
+            --accent: #00b0a6;
+            --accent-2: #ff6b57;
+            --shadow: 0 20px 40px rgba(17, 21, 38, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            font-family: "Outfit", sans-serif;
+            color: var(--txt-main);
+            background:
+                radial-gradient(circle at 10% 10%, #fff39e 0%, transparent 40%),
+                radial-gradient(circle at 90% 20%, #7fd9ff 0%, transparent 36%),
+                radial-gradient(circle at 20% 90%, #ffc2d9 0%, transparent 42%),
+                radial-gradient(circle at 80% 80%, #c2ffca 0%, transparent 34%),
+                linear-gradient(135deg, #f9efe0 0%, #dbeeff 50%, #ffe9db 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.28);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            filter: blur(1px);
+        }
+
+        body::before {
+            top: 8%;
+            left: 6%;
+            box-shadow:
+                0 0 0 12px rgba(255, 255, 255, 0.2),
+                0 0 0 28px rgba(255, 255, 255, 0.1);
+        }
+
+        body::after {
+            right: 6%;
+            bottom: 10%;
+            box-shadow:
+                inset 0 0 0 10px rgba(255, 255, 255, 0.2),
+                0 0 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .glass-card {
+            width: min(700px, 100%);
+            border-radius: 28px;
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(14px) saturate(155%);
+            -webkit-backdrop-filter: blur(14px) saturate(155%);
+            padding: 36px 28px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .glass-card::before,
+        .glass-card::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.65;
+            pointer-events: none;
+        }
+
+        .glass-card::before {
+            width: 90px;
+            height: 90px;
+            top: -24px;
+            left: -24px;
+            background: radial-gradient(circle at 35% 35%, #fff, #99f0e8);
+        }
+
+        .glass-card::after {
+            width: 70px;
+            height: 70px;
+            right: -18px;
+            bottom: -16px;
+            background: radial-gradient(circle at 30% 30%, #fff, #ffc5bb);
+        }
+
+        h1 {
+            margin: 0 0 20px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+        }
+
+        .excusa {
+            font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+            line-height: 1.5;
+            color: var(--txt-soft);
+            margin: 0 0 24px;
+            padding: 16px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .excusa span {
+            font-weight: 600;
+            color: var(--txt-main);
+        }
+
+        #generarExcusaBtn {
+            border: none;
+            border-radius: 999px;
+            padding: 12px 24px;
+            font-size: 0.98rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            color: #ffffff;
+            background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 100%);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 10px 22px rgba(18, 34, 56, 0.28);
+        }
+
+        #generarExcusaBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 26px rgba(18, 34, 56, 0.3);
+        }
+
+        #generarExcusaBtn:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 480px) {
+            .glass-card {
+                padding: 26px 16px;
+                border-radius: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="glass-card">
+        <h1>Generador de excusas</h1>
+
+        <p class="excusa">
+            <span id="accion">Acción</span>
+            <span id="conQuien">Con quién</span>
+            <span id="cuando">Cuándo</span>
+            <span id="donde">Dónde</span>
+        </p>
+
+        <button id="generarExcusaBtn" type="button">Generar otra excusa</button>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
