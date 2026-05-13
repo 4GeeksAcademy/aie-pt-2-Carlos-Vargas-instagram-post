@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Ecommerce internacional con carrito, pagos multimoneda y métodos regionales.">
+	<title>ESitef Store | Ecommerce Multimoneda</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+	<header class="site-header">
+		<div class="container topbar">
+			<a href="#" class="brand" aria-label="Inicio ESitef Store">
+				<span class="brand-mark">ES</span>
+				<span class="brand-name">ESitef Store</span>
+			</a>
+			<nav class="main-nav" aria-label="Principal">
+				<a href="#catalogo">Catálogo</a>
+				<a href="#checkout">Checkout</a>
+				<a href="#admin">Admin</a>
+				<a href="#soporte">Soporte</a>
+				<a href="#legal">Legal</a>
+			</nav>
+			<div class="header-actions">
+				<div class="selector-group">
+					<label for="countrySelector">País</label>
+					<select id="countrySelector" aria-label="Seleccionar país">
+						<option value="ES">España</option>
+						<option value="MX">México</option>
+						<option value="AR">Argentina</option>
+						<option value="CL">Chile</option>
+						<option value="CO">Colombia</option>
+					</select>
+				</div>
+				<div class="selector-group">
+					<label for="currencySelector">Moneda</label>
+					<select id="currencySelector" aria-label="Seleccionar moneda">
+						<option value="EUR">EUR</option>
+						<option value="MXN">MXN</option>
+						<option value="ARS">ARS</option>
+						<option value="CLP">CLP</option>
+						<option value="COP">COP</option>
+					</select>
+				</div>
+				<button id="cartToggle" class="cart-button" aria-label="Abrir carrito">
+					Carrito
+					<span id="cartCount" class="badge">0</span>
+				</button>
+			</div>
+		</div>
+	</header>
+
+	<main>
+		<section class="hero">
+			<div class="container hero-content">
+				<div>
+					<p class="kicker">Ecommerce internacional</p>
+					<h1>Vende y cobra en Europa y Latinoamérica con checkout regional.</h1>
+					<p>
+						Plataforma frontend en HTML, CSS y JavaScript vanilla con carrito persistente,
+						cambio de moneda y asignación automática de proveedores de pago según país.
+					</p>
+					<div class="hero-actions">
+						<a href="#catalogo" class="btn btn-primary">Ver productos</a>
+						<a href="#checkout" class="btn btn-outline">Ir a pagar</a>
+					</div>
+				</div>
+				<aside class="hero-card" aria-label="Resumen de beneficios">
+					<h2>Qué incluye</h2>
+					<ul>
+						<li>Carrito con localStorage y cálculo automático.</li>
+						<li>Monedas: EUR, MXN, ARS, CLP, COP.</li>
+						<li>Métodos de pago por región (PayPal, Stripe, Conekta, Mercado Pago, etc.).</li>
+						<li>Historial básico de órdenes y página de confirmación.</li>
+					</ul>
+				</aside>
+			</div>
+		</section>
+
+		<section id="catalogo" class="section container">
+			<div class="section-header">
+				<h2>Catálogo</h2>
+				<p>Precios base en EUR con conversión en tiempo real.</p>
+			</div>
+			<div id="productGrid" class="product-grid" aria-live="polite"></div>
+		</section>
+
+		<section id="checkout" class="section section-alt">
+			<div class="container checkout-layout">
+				<article class="panel">
+					<h2>Resumen de compra</h2>
+					<div id="cartItems" class="cart-items"></div>
+					<div class="totals">
+						<div><span>Subtotal</span><strong id="subtotalValue">-</strong></div>
+						<div><span>Impuestos</span><strong id="taxValue">-</strong></div>
+						<div class="grand-total"><span>Total</span><strong id="totalValue">-</strong></div>
+					</div>
+				</article>
+
+				<article class="panel">
+					<h2>Pago seguro</h2>
+					<p class="small">
+						No almacenamos datos de tarjeta. En producción debes tokenizar con los SDK
+						oficiales (Stripe Elements, PayPal Buttons, Conekta, Mercado Pago Checkout).
+					</p>
+					<form id="paymentForm" novalidate>
+						<div class="field-row">
+							<label for="customerName">Nombre completo</label>
+							<input id="customerName" name="customerName" type="text" required autocomplete="name">
+						</div>
+						<div class="field-row">
+							<label for="customerEmail">Correo</label>
+							<input id="customerEmail" name="customerEmail" type="email" required autocomplete="email">
+						</div>
+						<div class="field-row">
+							<label for="paymentProvider">Proveedor de pago</label>
+							<select id="paymentProvider" name="paymentProvider" required></select>
+							<small id="providerHint" class="small"></small>
+						</div>
+
+						<div class="gateway-config">
+							<h3>Configuración de pasarelas reales</h3>
+							<p class="small">Opcional para sandbox/live. Si no configuras credenciales, el checkout opera en modo demo seguro.</p>
+							<div class="field-row">
+								<label for="paypalClientId">PayPal Client ID</label>
+								<input id="paypalClientId" type="text" placeholder="AWx... sandbox/live">
+							</div>
+							<div class="field-row">
+								<label for="stripePublishableKey">Stripe Publishable Key</label>
+								<input id="stripePublishableKey" type="text" placeholder="pk_test_... o pk_live_...">
+							</div>
+							<button id="saveGatewayConfig" class="btn btn-outline" type="button">Guardar configuración</button>
+							<p id="gatewayFeedback" class="feedback" role="status" aria-live="polite"></p>
+						</div>
+
+						<div id="gatewayNotice" class="small gateway-notice"></div>
+						<div id="paypalButtonsContainer" class="gateway-box hidden"></div>
+						<div id="stripeElementsContainer" class="gateway-box hidden">
+							<p class="small">Stripe Elements activa tokenización PCI-compliant en frontend.</p>
+							<div id="stripeCardElement"></div>
+						</div>
+
+						<fieldset class="card-mock" id="cardFields">
+							<legend>Validación cliente (modo demo)</legend>
+							<div class="field-row">
+								<label for="cardNumber">Número de tarjeta</label>
+								<input id="cardNumber" name="cardNumber" inputmode="numeric" maxlength="19" placeholder="4242 4242 4242 4242">
+							</div>
+							<div class="split-fields">
+								<div class="field-row">
+									<label for="cardExpiry">Vencimiento (MM/AA)</label>
+									<input id="cardExpiry" name="cardExpiry" maxlength="5" placeholder="12/30">
+								</div>
+								<div class="field-row">
+									<label for="cardCvc">CVC</label>
+									<input id="cardCvc" name="cardCvc" inputmode="numeric" maxlength="4" placeholder="123">
+								</div>
+							</div>
+						</fieldset>
+
+						<button id="payButton" class="btn btn-primary btn-block" type="submit">Pagar ahora</button>
+					</form>
+					<p id="paymentFeedback" class="feedback" role="status" aria-live="polite"></p>
+				</article>
+			</div>
+		</section>
+
+		<section id="ordenes" class="section container">
+			<div class="section-header">
+				<h2>Historial de órdenes</h2>
+				<p>Almacenado localmente para pruebas.</p>
+			</div>
+			<div id="ordersHistory" class="orders-history"></div>
+		</section>
+
+		<section id="admin" class="section section-alt">
+			<div class="container">
+				<div class="section-header">
+					<h2>Panel admin de órdenes</h2>
+					<p>Vista tabular y exportación CSV para conciliación contable.</p>
+				</div>
+				<div class="admin-actions">
+					<button id="exportOrdersCsv" class="btn btn-primary" type="button">Exportar órdenes CSV</button>
+					<button id="clearOrdersHistory" class="btn btn-outline" type="button">Limpiar historial local</button>
+				</div>
+				<div class="table-wrap">
+					<table class="orders-table" aria-label="Tabla de órdenes">
+						<thead>
+							<tr>
+								<th>Orden</th>
+								<th>Fecha</th>
+								<th>País</th>
+								<th>Moneda</th>
+								<th>Total</th>
+								<th>Proveedor</th>
+								<th>Estado</th>
+							</tr>
+						</thead>
+						<tbody id="adminOrdersTableBody"></tbody>
+					</table>
+				</div>
+				<p id="adminFeedback" class="feedback" role="status" aria-live="polite"></p>
+			</div>
+		</section>
+
+		<section id="soporte" class="section section-alt">
+			<div class="container support-layout">
+				<article class="panel">
+					<h2>Contacto y soporte</h2>
+					<form id="contactForm" novalidate>
+						<div class="field-row">
+							<label for="supportName">Nombre</label>
+							<input id="supportName" type="text" required>
+						</div>
+						<div class="field-row">
+							<label for="supportEmail">Correo</label>
+							<input id="supportEmail" type="email" required>
+						</div>
+						<div class="field-row">
+							<label for="supportMessage">Mensaje</label>
+							<textarea id="supportMessage" rows="4" required></textarea>
+						</div>
+						<button class="btn btn-outline btn-block" type="submit">Enviar mensaje</button>
+						<p id="supportFeedback" class="feedback" role="status" aria-live="polite"></p>
+					</form>
+				</article>
+				<article id="legal" class="panel legal">
+					<h2>Privacidad y términos</h2>
+					<h3>Política de privacidad</h3>
+					<p>
+						Tratamos tus datos únicamente para procesar pagos, facturación y soporte.
+						Nunca guardamos el PAN completo de tarjeta; solo tokens del proveedor.
+					</p>
+					<h3>Términos de servicio</h3>
+					<p>
+						Las compras están sujetas a disponibilidad de stock, validación antifraude y
+						confirmación del procesador de pago regional.
+					</p>
+					<h3>Seguridad</h3>
+					<ul>
+						<li>HTTPS obligatorio en despliegues productivos.</li>
+						<li>Protección CSRF y validación backend obligatoria.</li>
+						<li>Recomendado: 3D Secure y reglas antifraude por proveedor.</li>
+					</ul>
+				</article>
+			</div>
+		</section>
+	</main>
+
+	<aside id="cartDrawer" class="cart-drawer" aria-hidden="true">
+		<div class="drawer-header">
+			<h2>Tu carrito</h2>
+			<button id="closeDrawer" class="icon-btn" aria-label="Cerrar carrito">x</button>
+		</div>
+		<div id="drawerItems" class="drawer-items"></div>
+		<a class="btn btn-primary btn-block" href="#checkout" id="goCheckout">Finalizar compra</a>
+	</aside>
+
+	<script src="main.js"></script>
+</body>
+</html>
